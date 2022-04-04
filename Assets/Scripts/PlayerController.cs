@@ -13,11 +13,13 @@ public class PlayerController : MonoBehaviour
   private float moveX;
   private float moveY;
   private Rigidbody body;
+  private Animator animator;
 
   // Start is called before the first frame update
   void Start()
   {
     body = GetComponent<Rigidbody>();
+    animator = GetComponentInChildren<Animator>();
   }
 
   // Update is called once per frame
@@ -27,6 +29,8 @@ public class PlayerController : MonoBehaviour
     moveY = Input.GetAxis("Vertical");
 
     transform.Rotate(Vector3.up * moveX * Time.deltaTime * rotSpeed);
+
+    animator.SetBool("Running", Mathf.Abs(moveX) > .1f || Mathf.Abs(moveY) > .1f);
   }
 
   /// <summary>
