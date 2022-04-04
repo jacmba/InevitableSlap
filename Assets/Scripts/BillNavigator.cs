@@ -10,19 +10,35 @@ public class BillNavigator : MonoBehaviour
 
   private NavMeshAgent agent;
   private Animator animator;
+  private KrissController kriss;
 
   // Start is called before the first frame update
   void Start()
   {
     agent = GetComponent<NavMeshAgent>();
     animator = GetComponentInChildren<Animator>();
+    kriss = target.GetComponent<KrissController>();
+
+    agent.SetDestination(target.position);
 
     animator.SetBool("Walking", true);
   }
 
-  // Update is called once per frame
-  void Update()
+  public void OnSlap()
   {
-    agent.SetDestination(target.position);
+    kriss.ReceiveSlap();
+  }
+
+  /// <summary>
+  /// OnTriggerEnter is called when the Collider other enters the trigger.
+  /// </summary>
+  /// <param name="other">The other Collider involved in this collision.</param>
+  void OnTriggerEnter(Collider other)
+  {
+    if (other.name == "Kriss")
+    {
+      agent.enabled = false;
+      animator.SetTrigger("Slap");
+    }
   }
 }
