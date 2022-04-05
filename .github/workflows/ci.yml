@@ -8,11 +8,13 @@ env:
 
 jobs:
   build:
-    name: Build ${{ matrix.targetPlatform }}
+    name: Build ${{ matrix.targetPlatform }} with Unity ${{ matrix.unityVersion }}
     runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
       matrix:
+        unityVersion:
+          - 2019.4.14f1
         targetPlatform:
           - StandaloneLinux64
           - StandaloneWindows64
@@ -29,10 +31,18 @@ jobs:
           path: Library
           key: Library
 
+      # Tests
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v1.3
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+          testMode: editmode
+
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v0.10
         with:
+          unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
 
       # Zip build folder
