@@ -19,14 +19,21 @@ public class BillNavigator : MonoBehaviour
     animator = GetComponentInChildren<Animator>();
     kriss = target.GetComponent<KrissController>();
 
-    agent.SetDestination(target.position);
+    GameController.OnGameStart += OnGameStart;
+  }
 
-    animator.SetBool("Walking", true);
+  /// <summary>
+  /// This function is called when the MonoBehaviour will be destroyed.
+  /// </summary>
+  void OnDestroy()
+  {
+    GameController.OnGameStart -= OnGameStart;
   }
 
   public void OnSlap()
   {
     kriss.ReceiveSlap();
+    GameController.GiveSlap();
   }
 
   /// <summary>
@@ -39,6 +46,13 @@ public class BillNavigator : MonoBehaviour
     {
       agent.enabled = false;
       animator.SetTrigger("Slap");
+      GameController.ReachRange();
     }
+  }
+
+  void OnGameStart()
+  {
+    agent.SetDestination(target.position);
+    animator.SetBool("Walking", true);
   }
 }

@@ -14,22 +14,40 @@ public class PlayerController : MonoBehaviour
   private float moveY;
   private Rigidbody body;
   private Animator animator;
+  private bool playing;
 
   // Start is called before the first frame update
   void Start()
   {
     body = GetComponent<Rigidbody>();
     animator = GetComponentInChildren<Animator>();
+    playing = false;
+
+    GameController.OnGameStart += OnGameStart;
+    GameController.OnRangeReached += OnRangeReached;
+  }
+
+  /// <summary>
+  /// This function is called when the MonoBehaviour will be destroyed.
+  /// </summary>
+  void OnDestroy()
+  {
+    GameController.OnGameStart -= OnGameStart;
+    GameController.OnRangeReached -= OnRangeReached;
   }
 
   // Update is called once per frame
   void Update()
   {
+    if (!playing)
+    {
+      return;
+    }
+
     moveX = Input.GetAxis("Horizontal");
     moveY = Input.GetAxis("Vertical");
 
     transform.Rotate(Vector3.up * moveX * Time.deltaTime * rotSpeed);
-
     animator.SetBool("Running", Mathf.Abs(moveX) > .1f || Mathf.Abs(moveY) > .1f);
   }
 
@@ -39,5 +57,16 @@ public class PlayerController : MonoBehaviour
   void FixedUpdate()
   {
     transform.Translate(Vector3.forward * Time.deltaTime * moveY * speed);
+  }
+
+  void OnGameStart()
+  {
+    playing = true;
+  }
+
+  void OnRangeReached()
+  {
+    playing = false;
+    animator.SetBool("Running", false);
   }
 }
