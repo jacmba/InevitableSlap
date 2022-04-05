@@ -31,13 +31,6 @@ jobs:
           path: Library
           key: Library
 
-      # Tests
-      - name: Run tests
-        uses: game-ci/unity-test-runner@v1.3
-        with:
-          unityVersion: ${{ matrix.unityVersion }}
-          testMode: editmode
-
       # Build
       - name: Build project
         uses: game-ci/unity-builder@v0.10
