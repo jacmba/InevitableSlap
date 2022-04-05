@@ -36,7 +36,11 @@ public class TextFader : MonoBehaviour
     }
     text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
 
-    if (Input.anyKeyDown)
+    if (Input.GetKeyDown(KeyCode.Escape))
+    {
+      Application.Quit();
+    }
+    else if (Input.anyKeyDown)
     {
       SceneManager.LoadScene(1);
     }

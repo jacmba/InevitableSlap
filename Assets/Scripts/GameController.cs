@@ -29,6 +29,17 @@ public class GameController : MonoBehaviour
   }
 
   /// <summary>
+  /// Update is called every frame, if the MonoBehaviour is enabled.
+  /// </summary>
+  void Update()
+  {
+    if (Input.GetKeyDown(KeyCode.Escape))
+    {
+      SceneManager.LoadScene(0);
+    }
+  }
+
+  /// <summary>
   /// This function is called when the MonoBehaviour will be destroyed.
   /// </summary>
   void OnDestroy()
