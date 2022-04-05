@@ -12,12 +12,15 @@ public class BillNavigator : MonoBehaviour
   private Animator animator;
   private KrissController kriss;
 
+  private AudioSource audioSource;
+
   // Start is called before the first frame update
   void Start()
   {
     agent = GetComponent<NavMeshAgent>();
     animator = GetComponentInChildren<Animator>();
     kriss = target.GetComponent<KrissController>();
+    audioSource = GetComponent<AudioSource>();
 
     GameController.OnGameStart += OnGameStart;
   }
@@ -32,6 +35,7 @@ public class BillNavigator : MonoBehaviour
 
   public void OnSlap()
   {
+    audioSource.play();
     kriss.ReceiveSlap();
     GameController.GiveSlap();
   }
