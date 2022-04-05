@@ -51,8 +51,9 @@ public class BillNavigator : MonoBehaviour
     if (other.name == "Kriss")
     {
       agent.enabled = false;
-      animator.SetTrigger("Slap");
+      animator.SetBool("Walking", false);
       GameController.ReachRange();
+      StartCoroutine(PrepareForSlap());
     }
   }
 
@@ -68,5 +69,11 @@ public class BillNavigator : MonoBehaviour
     yield return new WaitForSeconds(10f);
     agent.SetDestination(target.position);
     animator.SetBool("Walking", true);
+  }
+
+  IEnumerator PrepareForSlap()
+  {
+    yield return new WaitForSeconds(3f);
+    animator.SetTrigger("Slap");
   }
 }

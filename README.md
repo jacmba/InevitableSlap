@@ -12,6 +12,6 @@ Use game controller, arrow keys or WASD keys to move your character around the s
 - Design, development and graphics: Jacinto Mba.
 - Music created by Jacinto Mba, powered by [Aiva.ai](https://www.aiva.ai/)
 - Sound effects provided by [Freesound library](https://freesound.org/)
-- Licensed under [Apache License](LICENSE)
+- Licensed under [Apache License](LICENSE.md)
 
 Made for [Ludum Dare Jam 50](https://ldjam.com/) on XX anniversary
