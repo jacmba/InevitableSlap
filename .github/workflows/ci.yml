@@ -1,38 +1,64 @@
-name: Build project
+name: Actions
 
 on:
-  - push
+  push: { branches: [master] }
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
-  buildForAllSupportedPlatforms:
-    name: Build for ${{ matrix.targetPlatform }}
-    runs-on: ubuntu-latest
+  build:
+    name: Build ${{ matrix.targetPlatform }} with Unity ${{ matrix.unityVersion }}
+    runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
       matrix:
+        unityVersion:
+          - 2019.2.11f1
         targetPlatform:
-          - StandaloneOSX
-          - StandaloneWindows64
           - StandaloneLinux64
+          - StandaloneWindows64
+          - StandaloneOSX
     steps:
+      # Checkout
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      # Cache
+      - uses: actions/cache@v1.1.0
         with:
           path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
+          key: Library
 
-      - uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      # Tests
+      - name: Run tests
+        uses: game-ci/unity-test-runner@v1.3
         with:
+          unityVersion: ${{ matrix.unityVersion }}
+          testMode: editmode
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v0.10
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
 
-      - uses: actions/upload-artifact@v2
+      # Zip build folder
+      - name: Zip build folder
+        uses: papeloto/action-zip@v1
         with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+          files: build/${{ matrix.targetPlatform }}
+          dest: InevitableSlap-SNAPSHOT-${{ matrix.targetPlatform }}.zip
+
+      # Publish release asset
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: "https://uploads.github.com/repos/jacmba/vigila-el-cortijo/releases/38792365/assets{?name,label}"
+          asset_path: ./InevitableSlap-SNAPSHOT-${{ matrix.targetPlatform }}.zip
+          asset_name: InevitableSlap-SNAPSHOT_${{ github.sha }}-${{ matrix.targetPlatform }}.zip
+          asset_content_type: application/zip
