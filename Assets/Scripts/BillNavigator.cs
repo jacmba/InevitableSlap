@@ -35,7 +35,7 @@ public class BillNavigator : MonoBehaviour
 
   public void OnSlap()
   {
-    audioSource.play();
+    audioSource.Play();
     kriss.ReceiveSlap();
     GameController.GiveSlap();
   }
