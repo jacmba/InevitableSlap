@@ -22,6 +22,8 @@ public class BillNavigator : MonoBehaviour
     kriss = target.GetComponent<KrissController>();
     audioSource = GetComponent<AudioSource>();
 
+    animator.SetBool("Sitting", true);
+
     GameController.OnGameStart += OnGameStart;
   }
 
@@ -56,6 +58,14 @@ public class BillNavigator : MonoBehaviour
 
   void OnGameStart()
   {
+    StartCoroutine(PrepareForAction());
+  }
+
+  IEnumerator PrepareForAction()
+  {
+    yield return new WaitForSeconds(30f);
+    animator.SetBool("Sitting", false);
+    yield return new WaitForSeconds(10f);
     agent.SetDestination(target.position);
     animator.SetBool("Walking", true);
   }

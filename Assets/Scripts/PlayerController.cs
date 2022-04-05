@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
   void OnRangeReached()
   {
     playing = false;
+    moveX = 0f;
+    moveY = 0f;
     animator.SetBool("Running", false);
   }
 }
