@@ -13,6 +13,7 @@ public class BillNavigator : MonoBehaviour
   private KrissController kriss;
 
   private AudioSource audioSource;
+  private bool started;
 
   // Start is called before the first frame update
   void Start()
@@ -24,6 +25,8 @@ public class BillNavigator : MonoBehaviour
 
     animator.SetBool("Sitting", true);
 
+    started = false;
+
     GameController.OnGameStart += OnGameStart;
   }
 
@@ -33,6 +36,14 @@ public class BillNavigator : MonoBehaviour
   void OnDestroy()
   {
     GameController.OnGameStart -= OnGameStart;
+  }
+
+  /// <summary>
+  /// Update is called every frame, if the MonoBehaviour is enabled.
+  /// </summary>
+  void Update()
+  {
+    animator.SetBool("Walking", started && agent.enabled && !agent.isStopped);
   }
 
   public void OnSlap()
@@ -51,7 +62,6 @@ public class BillNavigator : MonoBehaviour
     if (other.name == "Kriss")
     {
       agent.enabled = false;
-      animator.SetBool("Walking", false);
       GameController.ReachRange();
       StartCoroutine(PrepareForSlap());
     }
@@ -68,7 +78,7 @@ public class BillNavigator : MonoBehaviour
     animator.SetBool("Sitting", false);
     yield return new WaitForSeconds(10f);
     agent.SetDestination(target.position);
-    animator.SetBool("Walking", true);
+    started = true;
   }
 
   IEnumerator PrepareForSlap()
