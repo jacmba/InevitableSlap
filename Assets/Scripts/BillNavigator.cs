@@ -13,6 +13,8 @@ public class BillNavigator : MonoBehaviour
   private KrissController kriss;
 
   private AudioSource audioSource;
+  private Transform character;
+  private Transform standPos;
   private bool started;
 
   // Start is called before the first frame update
@@ -22,6 +24,9 @@ public class BillNavigator : MonoBehaviour
     animator = GetComponentInChildren<Animator>();
     kriss = target.GetComponent<KrissController>();
     audioSource = GetComponent<AudioSource>();
+
+    character = transform.Find("Bill");
+    standPos = transform.Find("StandPos");
 
     animator.SetBool("Sitting", true);
 
@@ -76,6 +81,7 @@ public class BillNavigator : MonoBehaviour
   {
     yield return new WaitForSeconds(30f);
     animator.SetBool("Sitting", false);
+    character.position = standPos.position;
     yield return new WaitForSeconds(10f);
     agent.SetDestination(target.position);
     started = true;
