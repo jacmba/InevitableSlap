@@ -12,8 +12,7 @@ Use game controller, arrow keys or WASD keys to move your character around the s
 ![Screenshot 2](/screenshots/screenshot2.png)
 ![Screenshot 3](/screenshots/screenshot3.png)
 
-<iframe width="1280" height="588" src="https://www.youtube.com/embed/ca2evu_pyYs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+[Youtube video]("https://www.youtube.com/embed/ca2evu_pyYs")
 ## Credits and licenses
 - Design, development and graphics: Jacinto Mba.
 - Music created by Jacinto Mba, powered by [Aiva.ai](https://www.aiva.ai/)
