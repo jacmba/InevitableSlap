@@ -8,6 +8,12 @@ Use the obstacle in the scenery to avoid Bill to reach Kriss for a Slap.
 ## How to play
 Use game controller, arrow keys or WASD keys to move your character around the scenary. Push the obstacles to avoid Bill to reach Kriss position.
 
+![Screenshot 1](/screenshots/screenshot1.png)
+![Screenshot 2](/screenshots/screenshot2.png)
+![Screenshot 3](/screenshots/screenshot3.png)
+
+<iframe width="1280" height="588" src="https://www.youtube.com/embed/ca2evu_pyYs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Credits and licenses
 - Design, development and graphics: Jacinto Mba.
 - Music created by Jacinto Mba, powered by [Aiva.ai](https://www.aiva.ai/)
