@@ -11,12 +11,10 @@ public class GameController : MonoBehaviour
   public static event Action OnRangeReached;
   public static event Action OnSlapGiven;
 
-  [SerializeField]
-  private Text tipsText;
+  [SerializeField] private Text tipsText;
 
-  [SerializeField]
-  private Text timeText;
-
+  [SerializeField] private Text timeText;
+  [SerializeField] private AudioSource bgMusic;
   private bool started;
   private bool finished;
   private float fSeconds;
@@ -26,6 +24,12 @@ public class GameController : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
+    bool musicOn = PlayerPrefs.GetInt("music_on", 1) == 1;
+    if (!musicOn)
+    {
+      bgMusic.Stop();
+    }
+
     tipsText.text = "Meanwhile in the golden statue awards event... Kriss is making fun of Bill's big ears. Use the obstacle in the scenery to avoid Bill to reach Kriss for a Slap";
     started = false;
     finished = false;
