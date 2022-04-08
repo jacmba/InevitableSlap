@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
   private float fSeconds;
   private int seconds;
   private int minutes;
+  private int hiScore;
 
   // Start is called before the first frame update
   void Start()
@@ -29,6 +30,8 @@ public class GameController : MonoBehaviour
     {
       bgMusic.Stop();
     }
+
+    hiScore = PlayerPrefs.GetInt("hi_score", -1);
 
     tipsText.text = "Meanwhile in the golden statue awards event... Kriss is making fun of Bill's big ears. Use the obstacle in the scenery to avoid Bill to reach Kriss for a Slap";
     started = false;
@@ -59,7 +62,7 @@ public class GameController : MonoBehaviour
       }
 
       seconds = Mathf.FloorToInt(fSeconds);
-      string timeStr = getTimeString();
+      string timeStr = TimeUtils.getTimeString(minutes, seconds);
       timeText.text = timeStr;
     }
 
@@ -89,6 +92,16 @@ public class GameController : MonoBehaviour
     }
     else
     {
+      int totalTime = TimeUtils.getAbsoluteTime(minutes, seconds);
+      if (totalTime > hiScore)
+      {
+        PlayerPrefs.SetInt("hi_score", totalTime);
+        PlayerPrefs.Save();
+        string timeStr = TimeUtils.getTimeString(minutes, seconds);
+        tipsText.text = "Congratulations!!! You set a new record ( " + timeStr + " )";
+        yield return new WaitForSeconds(5);
+      }
+
       tipsText.text = "Game Over ";
       yield return new WaitForSeconds(3);
       SceneManager.LoadScene(0);
@@ -113,13 +126,7 @@ public class GameController : MonoBehaviour
 
   void onSlapGiven()
   {
-    tipsText.text = "That slap just happened. Your delay time is " + getTimeString();
+    tipsText.text = "That slap just happened. Your delay time is " + TimeUtils.getTimeString(minutes, seconds);
     StartCoroutine(ClearText());
-  }
-
-  private String getTimeString()
-  {
-    string format = "00";
-    return minutes.ToString(format) + ":" + seconds.ToString(format);
   }
 }

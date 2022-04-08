@@ -2767,7 +2767,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.915, y: 1.945, z: 0.915}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.92, z: 0}
   m_TimeToStationary: 0.5
@@ -3987,7 +3987,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.915, y: 1.945, z: 0.915}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.92, z: 0}
   m_TimeToStationary: 0.5
@@ -5027,7 +5027,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.915, y: 1.945, z: 0.915}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.92, z: 0}
   m_TimeToStationary: 0.5
@@ -6208,7 +6208,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.915, y: 1.945, z: 0.915}
   m_MoveThreshold: 0.1
-  m_Carve: 1
+  m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.92, z: 0}
   m_TimeToStationary: 0.5
@@ -6431,10 +6431,10 @@ RectTransform:
   m_Father: {fileID: 69200162}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -36.07843}
-  m_SizeDelta: {x: 647, y: 72.1569}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0.0005188}
+  m_SizeDelta: {x: 647, y: 368}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1668295723
 MonoBehaviour:
@@ -6458,12 +6458,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 29b0516d40ea100feafeff5cf703a4d7, type: 3}
-    m_FontSize: 16
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
