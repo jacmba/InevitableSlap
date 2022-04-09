@@ -47,6 +47,8 @@
      <Compile Include="Assets\Scripts\ButtonsController.cs" />
      <Compile Include="Assets\Scripts\TimeUtils.cs" />
      <Compile Include="Assets\Scripts\HiScoreDisplayer.cs" />
+     <Compile Include="Assets\Scripts\Draggable.cs" />
+     <Compile Include="Assets\Scripts\Droppable.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/home/jacinto/Unity/Hub/Editor/2020.3.14f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
