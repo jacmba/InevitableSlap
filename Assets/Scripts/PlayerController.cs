@@ -44,8 +44,16 @@ public class PlayerController : MonoBehaviour
       return;
     }
 
-    moveX = Input.GetAxis("Horizontal");
-    moveY = Input.GetAxis("Vertical");
+    if (SystemInfo.deviceType == DeviceType.Handheld)
+    {
+      moveX = MobileInput.h;
+      moveY = MobileInput.v;
+    }
+    else
+    {
+      moveX = Input.GetAxis("Horizontal");
+      moveY = Input.GetAxis("Vertical");
+    }
 
     transform.Rotate(Vector3.up * moveX * Time.deltaTime * rotSpeed);
     animator.SetBool("Running", Mathf.Abs(moveX) > .1f || Mathf.Abs(moveY) > .1f);
