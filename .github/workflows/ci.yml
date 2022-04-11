@@ -7,9 +7,37 @@ env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
+  snapshot:
+    name: Create snapshot release
+    runs-on: ubuntu-18.04
+    outputs:
+      url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Create changelog
+        id: create_changelog
+        uses: heinrichreimer/github-changelog-generator-action@2.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          onlyLastTag: true
+          stripHeaders: true
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: snapshot-${{ github.sha }}
+          release_name: snapshot-${{ github.sha }}
+          draft: false
+          prerelease: true
+          body: ${{ steps.create_changelog.outputs.changelog }}
+
   build:
     name: Build ${{ matrix.targetPlatform }} with Unity ${{ matrix.unityVersion }}
     runs-on: ubuntu-18.04
+    needs:
+      - snapshot
     strategy:
       fail-fast: false
       matrix:
@@ -59,7 +87,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: "https://uploads.github.com/repos/jacmba/InevitableSlap/releases/63580824/assets{?name,label}"
+          upload_url: ${{ needs.snapshot.outputs.url }}
           asset_path: ./InevitableSlap-SNAPSHOT-${{ matrix.targetPlatform }}.zip
           asset_name: InevitableSlap-SNAPSHOT_${{ github.sha }}-${{ matrix.targetPlatform }}.zip
           asset_content_type: application/zip
