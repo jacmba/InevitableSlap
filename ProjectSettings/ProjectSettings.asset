@@ -245,7 +245,9 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 1
+  AndroidKeystoreName: 
+  AndroidKeyaliasName: 
+  androidUseCustomKeystore: 0
   m_AndroidBanners:
   - width: 320
     height: 180
