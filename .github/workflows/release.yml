@@ -21,7 +21,7 @@ jobs:
           index_of_str: "refs/heads/release/"
 
   release:
-    name: Create snapshot release
+    name: Create release
     runs-on: ubuntu-18.04
     needs: get_version
     outputs:
