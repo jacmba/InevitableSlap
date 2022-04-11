@@ -1,15 +1,29 @@
 name: Actions
 
 on:
-  push: { branches: [master] }
+  push: { branches: [release/*] }
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
-  snapshot:
+  get_version:
+    name: Get release version
+    runs-on: ubuntu-18.04
+    outputs:
+      version: ${{ steps.get_version.outputs.substring }}
+    steps:
+      - name: Get version
+        id: get_version
+        uses: bhowell2/github-substring-action@v1.0.0
+        with:
+          value: ${{ github.ref }}
+          index_of_str: "refs/heads/release/"
+
+  release:
     name: Create snapshot release
     runs-on: ubuntu-18.04
+    needs: get_version
     outputs:
       url: ${{ steps.create_release.outputs.upload_url }}
     steps:
@@ -27,17 +41,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: snapshot-${{ github.sha }}
-          release_name: snapshot-${{ github.sha }}
+          tag_name: v${{ needs.get_version.outputs.version }}
+          release_name: v${{ needs.get_version.outputs.version }}
           draft: false
-          prerelease: true
+          prerelease: false
           body: ${{ steps.create_changelog.outputs.changelog }}
 
   build:
     name: Build ${{ matrix.targetPlatform }} with Unity ${{ matrix.unityVersion }}
     runs-on: ubuntu-18.04
     needs:
-      - snapshot
+      - get_version
+      - release
     strategy:
       fail-fast: false
       matrix:
@@ -79,7 +94,7 @@ jobs:
         uses: papeloto/action-zip@v1
         with:
           files: build/${{ matrix.targetPlatform }}
-          dest: InevitableSlap-SNAPSHOT-${{ matrix.targetPlatform }}.zip
+          dest: InevitableSlap-${{ needs.get_version.outputs.version }}-${{ matrix.targetPlatform }}.zip
 
       # Publish release asset
       - name: Upload release asset
@@ -88,6 +103,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.snapshot.outputs.url }}
-          asset_path: ./InevitableSlap-SNAPSHOT-${{ matrix.targetPlatform }}.zip
-          asset_name: InevitableSlap-SNAPSHOT-${{ github.sha }}-${{ matrix.targetPlatform }}.zip
+          asset_path: ./InevitableSlap-${{ needs.get_version.outputs.version }}-${{ matrix.targetPlatform }}.zip
+          asset_name: InevitableSlap-${{ needs.get_version.outputs.version }}-${{ matrix.targetPlatform }}.zip
           asset_content_type: application/zip
