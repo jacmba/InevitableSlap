@@ -247,7 +247,7 @@ PlayerSettings:
   androidUseLowAccuracyLocation: 0
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
